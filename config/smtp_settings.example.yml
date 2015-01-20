@@ -1,0 +1,16 @@
+
+development:
+  :address: smtp.gmail.com
+  :port: 587
+  :domain: gmail.com
+  :user_name: <username>
+  :password: <passwrod>
+  :authentication: plain
+  :enable_starttls_auto: true
+production:
+  :address: email-smtp.us-east-1.amazonaws.com
+  :port: 587
+  :authentication: plain
+  :user_name: <username>
+  :password: <password>
+  :enable_starttls_auto: true

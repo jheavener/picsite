@@ -1,0 +1,24 @@
+<div class="row">
+	<div class="hidden-xs hidden-sm col-md-3">
+		<div class="list-group">
+			<a href="<%= settings_path %>" class="list-group-item">Basic Settings</a>
+			<a href="<%= changepassword_path %>" class="list-group-item">Change Password</a>
+			<a href="<%= delete_user_path %>" class="list-group-item">Delete Account</a>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="panel panel-default">
+			<div class="panel-heading"><h3 class="text-center">Delete Account</h3></div>
+			<div class="panel-body">
+				<%= form_for @user, url: delete_user_path, method: :delete, html: { id: nil, class: nil } do |f| %>
+					<div class="alert alert-danger<%= ' hide' if @user.errors.empty? %>" role="alert"><%= @user.errors.full_messages.join('<br>').html_safe %></div>
+					<div class="form-group">
+						<label class="control-label" for="password">Current Password:</label>
+						<input type="password" id="password" class="form-control" name="password">
+					</div>
+					<button type="submit" class="btn btn-primary">Delete Account</button>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

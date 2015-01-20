@@ -1,0 +1,50 @@
+
+with_email:
+  username: 'user1'
+  display_name: 'User1'
+  password_digest: <%= BCrypt::Password.create('password') %>
+  email: 'user1@test.com'
+without_email:
+  username: 'user2'
+  display_name: 'User2'
+  password_digest: <%= BCrypt::Password.create('password') %>
+with_token:
+  username: 'user3'
+  display_name: 'User3'
+  password_digest: <%= BCrypt::Password.create('password') %>
+  email: 'user3@test.com'
+  forgot_password_token: <%= '3-'+Digest::SHA1.hexdigest(Time.now.to_s) %>
+  forgot_password_at: <%= Time.now %>
+deleted:
+  username: 'user4'
+  display_name: 'User4'
+  password_digest: <%= BCrypt::Password.create('password') %>
+  email: 'user4@test.com'
+  status: 'deleted'
+banned:
+  username: 'user5'
+  display_name: 'User5'
+  password_digest: <%= BCrypt::Password.create('password') %>
+  email: 'user5@test.com'
+  status: 'banned'
+deleted_with_token:
+  username: 'user6'
+  display_name: 'User6'
+  password_digest: <%= BCrypt::Password.create('password') %>
+  email: 'user6@test.com'
+  forgot_password_token: <%= '6-'+Digest::SHA1.hexdigest(Time.now.to_s) %>
+  forgot_password_at: <%= Time.now %>
+  status: 'deleted'
+banned_with_token:
+  username: 'user7'
+  display_name: 'User7'
+  password_digest: <%= BCrypt::Password.create('password') %>
+  email: 'user7@test.com'
+  forgot_password_token: <%= '7-'+Digest::SHA1.hexdigest(Time.now.to_s) %>
+  forgot_password_at: <%= Time.now %>
+  status: 'banned'
+admin:
+  username: 'user8'
+  display_name: 'User8'
+  password_digest: <%= BCrypt::Password.create('password') %>
+  status: 'admin'

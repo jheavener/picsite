@@ -1,0 +1,11 @@
+en:
+  errors:
+    messages:
+      blank: "is required"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            username:
+              invalid: 'must contain only letters, numbers, "-" and "_"'

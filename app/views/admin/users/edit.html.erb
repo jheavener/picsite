@@ -1,0 +1,52 @@
+<div class="row">
+	<div class="col-md-3">
+		<div class="list-group">
+			<a href="<%= admin_users_path %>" class="list-group-item">Back to Users List</a>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="panel panel-default">
+			<div class="panel-heading"><h3 class="text-center">Edit: <strong><%= @user.display_name %></strong></h3></div>
+			<div class="panel-body">
+				<p><strong>Joined:</strong> <%= time_ago_in_words(@user.created_at) %> ago (<%= @user.created_at %>)</p>
+				<p><strong>Last Updated:</strong> <%= time_ago_in_words(@user.updated_at) %> ago (<%= @user.updated_at %>)</p>
+				<hr>
+				<%= form_for @user, url: admin_user_path(@user), html: { id: nil, class: nil } do |f| %>
+					<div class="alert alert-danger<%= ' hide' if @user.errors.empty? %>" role="alert"><%= @user.errors.full_messages.join('<br>').html_safe %></div>
+					<div class="form-group">
+						<label class="control-label" for="email">Status:</label>
+						<div class="radio">
+							<label class="radio-inline">
+								<input type="radio" name="user[status]" value="active"<%= ' checked' if @user.status =='active' %>> <span class="<%= 'strong' if @user.status == 'active' %>">Active</span>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="user[status]" value="deleted"<%= ' checked' if @user.status =='deleted' %>> <span class="<%= 'strong' if @user.status == 'deleted' %>">Deleted</span>
+							</label>
+							<label class="radio-inline">
+  								<input type="radio" name="user[status]" value="banned"<%= ' checked' if @user.status =='banned' %>> <span class="<%= 'strong' if @user.status == 'banned' %>">Banned</span>
+							</label>
+							<label class="radio-inline">
+  								<input type="radio" name="user[status]" value="admin"<%= ' checked' if @user.status =='admin' %>> <span class="<%= 'strong' if @user.status == 'admin' %>">Admin</span>
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="email">Email Address (optional):</label>
+						<input type="text" id="email" class="form-control" name="user[email]" value="<%= @user.email %>">
+					</div>
+					<button type="submit" class="btn btn-primary">Save Changes</button>
+				<% end %>
+				<% if @user.forgot_password_token %>
+				<hr>
+				<div class="panel panel-info">
+					<div class="panel-heading"><h3 class="panel-title">Reset Password Link:</h3></div>
+					<div class="panel-body">
+						<p><strong>Reset Password URL:</strong> <a href="<%= resetpassword_url(@user.forgot_password_token) %>"><%= resetpassword_url(@user.forgot_password_token) %></a></p>
+						<p><strong>Last Reset Request At:</strong> <%= time_ago_in_words(@user.forgot_password_at) %> ago (<%= @user.forgot_password_at %>)</p>
+					</div>
+				</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

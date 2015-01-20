@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading"><h1 class="text-center">Join PicSite</h1></div>
+			<div class="panel-body">
+				<h4>Join to start sharing, commenting and voting on pictures.</h4>
+				<hr>
+				<%= form_for @user, url: join_path, html: { id: nil, class: 'join-form' } do |f| %>
+					<div class="alert alert-danger<%= ' hide' if @user.errors.empty? %>" role="alert"><%= @user.errors.full_messages.join('<br>').html_safe %></div>
+					<div class="form-group<% if @user.errors[:username].any? %> has-error has-feedback<% end %>">
+						<label class="control-label" for="username">Username:</label>
+						<input type="text" id="username" class="form-control" name="user[username]" value="<%= params[:user] ? params[:user][:username] : '' %>" autofocus>
+						<span class="glyphicon glyphicon-remove form-control-feedback<% if @user.errors[:username].empty? %> hide<% end %>" aria-hidden="true"></span>
+					</div>
+					<div class="form-group<% if @user.errors[:email].any? %> has-error has-feedback<% end %>">
+						<label class="control-label" for="email">Email Address (optional):</label>
+						<input type="text" id="email" class="form-control" name="user[email]" value="<%= params[:user] ? params[:user][:email] : '' %>">
+					</div>
+					<div class="form-group<% if @user.errors[:password].any? %> has-error has-feedback<% end %>">
+						<label class="control-label" for="password">Password:</label>
+						<input type="password" id="password" class="form-control" name="user[password]">
+					</div>
+					<div class="form-group<% if @user.errors[:password_confirmation].any? %> has-error has-feedback<% end %>">
+						<label class="control-label" for="password_confirmation">Confirm Your Password:</label>
+						<input type="password" id="password_confirmation" class="form-control" name="user[password_confirmation]">
+					</div>
+					<button type="submit" class="btn btn-primary btn-lg btn-block">Join</button>
+					<p class="help-block">Joining means you accept our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p>
+				<% end %>
+				<hr>
+				<h4>Already have an account? <a href="<%= signin_path %>">Click&nbsp;here</a> to sign in.</h4>
+			</div>
+		</div>
+	</div>
+</div>

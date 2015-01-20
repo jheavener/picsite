@@ -1,0 +1,25 @@
+<div class="table-responsive">
+	<h2>Users</h2>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Username:</th>
+				<th>Status:</th>
+				<th>Email:</th>
+				<th>Created At:</th>
+				<th>Updated At:</th>
+			</tr>
+		</thead>
+		<tbody>
+		<% @users.each do |user| %>
+			<tr>
+				<td><a href="<%= edit_admin_user_path(user) %>"><%= user.display_name %></a></td>
+				<td><span class="label label-<%= if user.status == 'active' then 'success' elsif user.status == 'deleted' then 'warning' elsif user.status == 'banned' then 'danger' elsif user.status == 'admin' then 'info' end %>"><%= user.status %></span></td>
+				<td><%= user.email %></td>
+				<td><%= user.created_at %></td>
+				<td><%= user.updated_at %></td>
+			</tr>
+		<% end %>
+		</tbody>
+	</table>
+</div>
