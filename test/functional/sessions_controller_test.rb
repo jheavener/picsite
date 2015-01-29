@@ -25,14 +25,44 @@ class SessionsControllerTest < ActionController::TestCase
   end
   
   test "should signout user" do
-    assert_routing signout_path, { controller: 'sessions', action: 'destroy' }
+    assert_routing signout_path, { controller: 'sessions', action: 'update' }
     
     user = users(:with_email)
     post :create, session: { username: user.display_name, password: 'password' }
     assert @controller.signed_in?
     
-    get :destroy
+    get :update
     assert !@controller.signed_in?
     assert_redirected_to root_path
+  end
+  
+  test "should get index" do
+    assert_routing user_sessions_path, { controller: 'sessions', action: 'index' }
+    
+    user = users(:with_email)
+    @controller.send(:signin, user)
+    get :index
+    assert_response :success
+    assert assigns(:user_sessions)
+  end
+  
+  test "should redirect index to signin" do
+    get :index
+    assert_redirected_to signin_path
+  end
+  
+  test "should get destroy" do
+    user = users(:with_email)
+    @controller.send(:signin, user)
+    user_session_id = @controller.get_user_session
+    assert_routing({ method: 'delete', path: user_session_path(user_session_id) }, { controller: 'sessions', action: 'destroy', id: user_session_id })
+    
+    delete :destroy, { id: user_session_id }
+    assert_redirected_to user_sessions_path
+    assert_equal 'Session successfully deleted.', flash[:notice]
+    
+    user_session = UserSession.find(user_session_id)
+    assert_not_nil user_session
+    assert_equal 'deleted', user_session.status
   end
 end

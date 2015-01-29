@@ -5,7 +5,7 @@ class ChangepasswordController < ApplicationController
   end
 
   def update
-    if @user.change_password(params[:password], params[:user])
+    if @current_user.change_password(params[:password], params[:user])
       redirect_to settings_path, notice: 'Your password was successfully changed.'
     else
       render :edit

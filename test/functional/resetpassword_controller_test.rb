@@ -30,7 +30,7 @@ class ResetpasswordControllerTest < ActionController::TestCase
     assert_redirected_to signin_path
     assert_not_nil assigns(:user), "user should not be nil"
     assert_equal 'Your password was successfully reset.', flash[:notice]
-    assert User.sign_in({ username: @user.display_name, password: 'new_password' })
+    assert User.signin({ username: @user.display_name, password: 'new_password' })
   end
   
   test "should show resetpassword errors" do

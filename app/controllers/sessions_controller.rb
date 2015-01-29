@@ -1,11 +1,17 @@
 class SessionsController < ApplicationController
+  before_filter :signin_required, only: [:index, :destroy]
+  
+  def index
+    @user_sessions = @current_user.sessions.active.order(:last_activity_at).reverse_order.all
+  end
+  
   def new
   end
 
   def create
-    user = User.sign_in(params[:session])
+    user = User.signin(params[:session])
     if user
-      sign_in(user)
+      signin(user)
       redirect_to root_path
     else
       @error = true
@@ -13,8 +19,18 @@ class SessionsController < ApplicationController
     end
   end
 
-  def destroy
-    sign_out
+  def update
+    signout
     redirect_to root_path
+  end
+  
+  def destroy
+    user_session = @current_user.sessions.get_active_session(params[:id])
+    if user_session.delete_session
+      flash[:notice] = 'Session successfully deleted.'
+    else
+      flash[:alert] = 'There was a problem deleting the session.'
+    end
+    redirect_to user_sessions_path
   end
 end

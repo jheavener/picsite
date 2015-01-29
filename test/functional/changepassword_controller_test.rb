@@ -5,9 +5,10 @@ class ChangepasswordControllerTest < ActionController::TestCase
     assert_routing changepassword_path, { controller: 'changepassword', action: 'edit' }
     
     user = users(:with_email)
-    get :edit, nil, { display_name: user.display_name }
+    @controller.send(:signin, user)
+    get :edit
     assert_response :success
-    assert_not_nil assigns(:user)
+    assert_not_nil assigns(:current_user)
   end
   
   test "should redirect from changepassword edit if not signed_in" do
@@ -26,26 +27,28 @@ class ChangepasswordControllerTest < ActionController::TestCase
     assert_routing({ method: 'put', path: changepassword_path }, { controller: 'changepassword', action: 'update' })
     
     new_password = 'new_password'
-    put :update, { password: 'password', user: { password: new_password, password_confirmation: new_password } }, { display_name: user.display_name }
+    @controller.send(:signin, user)
+    put :update, { password: 'password', user: { password: new_password, password_confirmation: new_password } }
     assert_redirected_to settings_path
     assert_equal 'Your password was successfully changed.', flash[:notice]
     
-    user = assigns(:user)
-    assert_not_nil user
-    assert user.errors.empty?
-    assert user.authenticate(new_password) 
+    current_user = assigns(:current_user)
+    assert_not_nil current_user
+    assert current_user.errors.empty?
+    assert current_user.authenticate(new_password) 
   end
   
   test "should get changepassword errors with nil params" do
     user = users(:with_email)
     
-    put :update, nil, { display_name: user.display_name }
+    @controller.send(:signin, user)
+    put :update
     assert_response :success
     assert_template :edit
     
-    user = assigns(:user)
-    assert_not_nil user
-    assert user.errors.any? 
+    current_user = assigns(:current_user)
+    assert_not_nil current_user
+    assert current_user.errors.any?
   end
   
   test "should redirect from changepassword update if not signed_in" do

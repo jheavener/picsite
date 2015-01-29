@@ -1,7 +1,10 @@
 class User < ActiveRecord::Base
+  attr_accessor :remember
   attr_readonly :id, :username, :display_name, :created_at
   attr_accessible :username, :email, :password, :password_confirmation, as: :join
-  attr_accessible :email, :status, as: :admin 
+  attr_accessible :email, :status, as: :admin
+  
+  has_many :sessions, class_name: 'UserSession'
   
   after_validation :clear_password_digest_errors
   before_create :set_display_and_username
@@ -63,7 +66,7 @@ class User < ActiveRecord::Base
     end
   end
   
-  def self.sign_in(params)
+  def self.signin(params)
     user = get_by_username(params[:username])
     user if user && params[:password] && user.authenticate(params[:password])
   end

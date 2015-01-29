@@ -8,7 +8,8 @@ class Admin::HomepageControllerTest < ActionController::TestCase
   test "should get index" do
     assert_routing admin_root_path, { controller: 'admin/homepage', action: 'index' }
     
-    get :index, nil, { display_name: @admin_user.to_param }
+    @controller.send(:signin, @admin_user)
+    get :index
     assert_response :success
   end
   
@@ -23,7 +24,8 @@ class Admin::HomepageControllerTest < ActionController::TestCase
     assert_routing admin_root_path, { controller: 'admin/homepage', action: 'index' }
     
     user = users(:with_email)
-    get :index, nil, { display_name: user.to_param }
+    @controller.send(:signin, user)
+    get :index
     assert_redirected_to signin_path
   end
 end

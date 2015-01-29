@@ -53,10 +53,11 @@ class UsersControllerTest < ActionController::TestCase
     user = users(:with_email)
     assert_routing settings_path, { controller: 'users', action: 'edit' }
     
-    get :edit, nil, { display_name: user.display_name }
+    @controller.send(:signin, user)
+    get :edit
     assert_response :success
     assert_template :edit
-    assert_not_nil assigns(:user)
+    assert_not_nil assigns(:current_user)
   end
   
   test "should redirect from user settings page if not signed_in" do
@@ -75,24 +76,25 @@ class UsersControllerTest < ActionController::TestCase
     assert_routing({ method: 'put', path: settings_path }, { controller: 'users', action: 'update' })
     
     new_email = 'new_email@test.com'
-    put :update, { password: 'password', user: { email: new_email } }, { display_name: user.display_name }
+    @controller.send(:signin, user)
+    put :update, { password: 'password', user: { email: new_email } }
     assert_response :success
     assert_template :edit
     
-    user = assigns(:user)
-    assert_not_nil user
-    assert user.errors.empty?
-    assert_equal new_email, user.email 
+    current_user = assigns(:current_user)
+    assert_not_nil current_user
+    assert current_user.errors.empty?
+    assert_equal new_email, current_user.email 
   end
   
   test "should show update user settings errors with nil email" do
     user = users(:with_email)
-    
-    put :update, { password: 'password', user: {} }, { display_name: user.display_name }
+    @controller.send(:signin, user)
+    put :update, { password: 'password', user: {} }
     assert_response :success
     assert_template :edit
     
-    user = assigns(:user)
+    user = assigns(:current_user)
     assert_not_nil user
     assert user.errors.any? 
   end

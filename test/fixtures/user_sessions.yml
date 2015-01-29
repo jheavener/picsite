@@ -1,0 +1,12 @@
+
+active:
+  user_id: 1
+expired:
+  user_id: 1
+  status: expired
+signed_out:
+  user_id: 1
+  status: signed_out
+deleted:
+  user_id: 1
+  status: deleted

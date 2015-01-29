@@ -1,0 +1,12 @@
+<div class="row">
+	<div class="col-md-3">
+		<div class="list-group">
+			<a href="<%= admin_users_path %>" class="list-group-item">&lt; Back to Users List</a>
+			<a href="<%= edit_admin_user_path(@user) %>" class="list-group-item<%= ' active' if controller.controller_name == 'users' %>">User Settings</a>
+			<a href="<%= admin_user_sessions_path(@user) %>" class="list-group-item<%= ' active' if controller.controller_name == 'sessions' %>">User Sessions</a>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<%= yield %>
+	</div>
+</div>

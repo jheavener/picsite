@@ -242,41 +242,41 @@ class UserTest < ActiveSupport::TestCase
   end
   
   #
-  # sign_in
+  # signin
   #
-  test "sign_in should be valid" do
+  test "signin should be valid" do
     user = users(:with_email)
-    assert_not_nil User.sign_in({ username: user.display_name, password: 'password' })
+    assert_not_nil User.signin({ username: user.display_name, password: 'password' })
   end
   
-  test "sign_in should be invalid with blank username" do
+  test "signin should be invalid with blank username" do
     user = users(:with_email)
-    assert_nil User.sign_in({ username: '', password: 'password' })
+    assert_nil User.signin({ username: '', password: 'password' })
   end
   
-  test "sign_in should be invalid with not found username" do
+  test "signin should be invalid with not found username" do
     user = users(:with_email)
-    assert_nil User.sign_in({ username: user.display_name+'1', password: 'passworde' })
+    assert_nil User.signin({ username: user.display_name+'1', password: 'passworde' })
   end
   
-  test "sign_in should be invalid with blank password" do
+  test "signin should be invalid with blank password" do
     user = users(:with_email)
-    assert_nil User.sign_in({ username: user.display_name, password: '' })
+    assert_nil User.signin({ username: user.display_name, password: '' })
   end
   
-  test "sign_in should be invalid with wrong password" do
+  test "signin should be invalid with wrong password" do
     user = users(:with_email)
-    assert_nil User.sign_in({ username: user.display_name, password: 'password1' })
+    assert_nil User.signin({ username: user.display_name, password: 'password1' })
   end
   
-  test "sign_in should be invalid with deleted user" do
+  test "signin should be invalid with deleted user" do
     user = users(:deleted)
-    assert_nil User.sign_in({ username: user.display_name, password: 'password' })
+    assert_nil User.signin({ username: user.display_name, password: 'password' })
   end
   
-  test "sign_in should be invalid with banned user" do
+  test "signin should be invalid with banned user" do
     user = users(:banned)
-    assert_nil User.sign_in({ username: user.display_name, password: 'password' })
+    assert_nil User.signin({ username: user.display_name, password: 'password' })
   end
   
   #
@@ -317,7 +317,7 @@ class UserTest < ActiveSupport::TestCase
     user = User.reset_password(user.forgot_password_token, { password: 'new_password', password_confirmation: 'new_password' })
     assert user.errors.empty?
     assert user.forgot_password_token.blank?
-    assert User.sign_in({ username: user.username, password: 'new_password' })
+    assert User.signin({ username: user.username, password: 'new_password' })
   end
   
   test "reset_password should be invalid with invalid token" do

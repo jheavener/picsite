@@ -1,32 +1,23 @@
-<div class="row">
-	<div class="hidden-xs hidden-sm col-md-3">
-		<div class="list-group">
-			<a href="<%= settings_path %>" class="list-group-item">Basic Settings</a>
-			<a href="<%= changepassword_path %>" class="list-group-item">Change Password</a>
-			<a href="<%= delete_user_path %>" class="list-group-item">Delete Account</a>
+<%= render layout: 'users/settings_menu', locals: { active_page: 'password' } do %>
+	<div class="panel panel-default">
+		<div class="panel-heading"><h3 class="text-center">Change Password</h3></div>
+		<div class="panel-body">
+			<%= form_for @current_user, url: changepassword_path, html: { id: nil, class: nil } do |f| %>
+				<div class="alert alert-danger<%= ' hide' if @current_user.errors.empty? %>" role="alert"><%= @current_user.errors.full_messages.join('<br>').html_safe %></div>
+				<div class="form-group">
+					<label class="control-label" for="password">Current Password:</label>
+					<input type="password" id="password" class="form-control" name="password" autofocus>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="password">New Password:</label>
+					<input type="password" id="password" class="form-control" name="user[password]">
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="password_confirmation">Confirm Your New Password:</label>
+					<input type="password" id="password_confirmation" class="form-control" name="user[password_confirmation]">
+				</div>
+				<button type="submit" class="btn btn-primary">Save New Password</button>
+			<% end %>
 		</div>
 	</div>
-	<div class="col-md-9">
-		<div class="panel panel-default">
-			<div class="panel-heading"><h3 class="text-center">Change Password</h3></div>
-			<div class="panel-body">
-				<%= form_for @user, url: changepassword_path, html: { id: nil, class: nil } do |f| %>
-					<div class="alert alert-danger<%= ' hide' if @user.errors.empty? %>" role="alert"><%= @user.errors.full_messages.join('<br>').html_safe %></div>
-					<div class="form-group">
-						<label class="control-label" for="password">Current Password:</label>
-						<input type="password" id="password" class="form-control" name="password" autofocus>
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="password">New Password:</label>
-						<input type="password" id="password" class="form-control" name="user[password]">
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="password_confirmation">Confirm Your New Password:</label>
-						<input type="password" id="password_confirmation" class="form-control" name="user[password_confirmation]">
-					</div>
-					<button type="submit" class="btn btn-primary">Save New Password</button>
-				<% end %>
-			</div>
-		</div>
-	</div>
-</div>
+<% end %>

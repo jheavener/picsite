@@ -5,8 +5,8 @@ class DeleteUserController < ApplicationController
   end
 
   def destroy
-    if @user.delete_user(params[:password])
-      sign_out
+    if @current_user.delete_user(params[:password])
+      signout
       redirect_to root_path, notice: 'Your account has been deleted.'
     else
       render :edit

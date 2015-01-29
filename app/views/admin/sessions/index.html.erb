@@ -1,0 +1,38 @@
+<%= render layout: 'admin/users/user_menu' do %>
+	<div class="panel panel-default">
+		<div class="panel-heading"><h3 class="text-center">Sessions: <strong><%= @user.display_name %></strong></h3></div>
+		<div class="panel-body">
+			<div class="page-header">
+				<h3>Active Sessions:</h3>
+			</div>
+			<% @active_sessions.each do |user_session| %>
+			<div class="list-group-item">
+				<h4 class="list-group-item-heading">
+					IP Address: <%= user_session.ip_addr %>
+					<div class="pull-right">
+						<%= form_for :session, url: admin_user_session_path(@user, user_session), method: :delete, html: { id: nil, class: nil } do |f| %>
+							<button type="submit" class="btn btn-danger btn-xs">Delete</button>
+						<% end %>
+					</div>
+				</h4>
+				<p class="list-group-item-text">Last activity at: <%= user_session.last_activity_at %></p>
+				<p class="list-group-item-text">Signed in at: <%= user_session.created_at %></p>
+			</div>
+			<% end %>
+			
+			<div class="page-header">
+				<h3>Inactive Sessions:</h3>
+			</div>
+			<% @inactive_sessions.each do |user_session| %>
+			<div class="list-group-item">
+				<h4 class="list-group-item-heading">
+					IP Address: <%= user_session.ip_addr %>
+				</h4>
+				<p class="list-group-item-text"><strong><%= user_session.status %> at: <%= user_session.updated_at %></strong></p>
+				<p class="list-group-item-text">Last activity at: <%= user_session.last_activity_at %></p>
+				<p class="list-group-item-text">Signed in at: <%= user_session.created_at %></p>
+			</div>
+			<% end %>
+		</div>
+	</div>
+<% end %>

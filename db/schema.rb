@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150102020122) do
+ActiveRecord::Schema.define(:version => 20150120040446) do
+
+  create_table "user_sessions", :force => true do |t|
+    t.integer  "user_id",                                              :null => false
+    t.string   "status",           :limit => 10, :default => "active", :null => false
+    t.string   "ip_addr"
+    t.string   "user_agent"
+    t.datetime "last_activity_at"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+  end
+
+  add_index "user_sessions", ["user_id", "status", "last_activity_at"], :name => "index_user_sessions_on_user_id_and_status_and_last_activity_at"
 
   create_table "users", :force => true do |t|
     t.string   "username",              :limit => 30,                        :null => false

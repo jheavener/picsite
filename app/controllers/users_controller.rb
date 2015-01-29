@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user], as: :join)
     if @user.save
-      sign_in(@user)
+      signin(@user)
       redirect_to root_path, notice: 'Thank You for joining PicSite.'
     else
       render :new
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
   
   def update
-    @user.change_email(params[:password], params[:user])
+    @current_user.change_email(params[:password], params[:user])
     render :edit
   end
 end

@@ -1,0 +1,23 @@
+<%= render layout: 'users/settings_menu', locals: { active_page: 'sessions' } do %>
+	<div class="panel panel-default">
+		<div class="panel-heading"><h3 class="text-center">Session History</h3></div>
+		<div class="panel-body">
+			<div class="list-group">
+			<% @user_sessions.each do |user_session| %>
+				<div class="list-group-item">
+					<h4 class="list-group-item-heading">
+						IP Address: <%= user_session.ip_addr %>
+						<div class="pull-right">
+							<%= form_for :session, url: user_session_path(user_session), method: :delete, html: { id: nil, class: nil } do |f| %>
+								<button type="submit" class="btn btn-danger btn-xs">Delete</button>
+							<% end %>
+						</div>
+					</h4>
+					<p class="list-group-item-text">Last activity at: <%= user_session.last_activity_at %></p>
+					<p class="list-group-item-text">Signed in at: <%= user_session.created_at %></p>
+				</div>
+			<% end %>
+			</div>
+		</div>
+	</div>
+<% end %>

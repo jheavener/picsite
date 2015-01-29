@@ -1,0 +1,13 @@
+<div class="row">
+	<div class="hidden-xs hidden-sm col-md-3">
+		<div class="list-group">
+			<a href="<%= settings_path       %>" class="list-group-item<%= ' active' if active_page == 'basic'    %>">Basic Settings</a>
+			<a href="<%= changepassword_path %>" class="list-group-item<%= ' active' if active_page == 'password' %>">Change Password</a>
+			<a href="<%= user_sessions_path  %>" class="list-group-item<%= ' active' if active_page == 'sessions' %>">Session History</a>
+			<a href="<%= delete_user_path    %>" class="list-group-item<%= ' active' if active_page == 'delete'   %>">Delete Account</a>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<%= yield %>
+	</div>
+</div>

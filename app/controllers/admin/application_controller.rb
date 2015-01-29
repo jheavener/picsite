@@ -6,7 +6,7 @@ class Admin::ApplicationController < ApplicationController
   def admin_required
     @admin_user = User.admin.get_by_username(get_username) if signed_in?
     if !@admin_user
-      sign_out
+      signout
       redirect_to signin_path
     end
   end
